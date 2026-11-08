@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Two friends helping your neighborhood clear out unwanted stuff from homes, yards, and garages."
+    />
+    <title>De-Junk Duo | Clear the clutter</title>
+    <style>
+:root {
+  --ink: #1f2928;
+  --ink-deep: #182322;
+  --cream: #f7f2e9;
+  --paper: #fbfaf6;
+  --lime: #d9f34d;
+  --lime-dark: #a9c91e;
+  --coral: #ff735c;
+  --coral-ink: #b74739;
+  --mustard: #ffc83d;
+  --sage: #bad8b4;
+  --line: #dce0d8;
+  --muted: #66716d;
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --shadow: 0 20px 45px rgba(24, 35, 34, 0.12);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+button, input, select, textarea { font: inherit; }
+a { color: inherit; text-decoration: none; }
+.container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+.section { padding: 112px 0; }
+.section-dark { color: var(--cream); background: var(--ink-deep); }
+
+.announcement-bar { background: var(--lime); color: var(--ink-deep); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.announcement-inner { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 36px; }
+.announcement-inner a { margin-left: 12px; border-bottom: 1px solid var(--ink-deep); }
+.announcement-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+
+.site-header { position: relative; z-index: 10; background: var(--paper); border-bottom: 1px solid rgba(31, 41, 40, .08); }
+.nav-wrap { display: flex; align-items: center; justify-content: space-between; min-height: 88px; gap: 30px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand-mark { position: relative; width: 37px; height: 38px; display: inline-block; }
+.brand-square { position: absolute; width: 27px; height: 27px; left: 4px; bottom: 2px; border-radius: 6px 7px 7px 2px; background: var(--coral); transform: rotate(-8deg); }
+.brand-square::after { content: ""; position: absolute; inset: 6px; border: 2px solid var(--ink-deep); border-top-width: 3px; border-radius: 3px; transform: skewY(-8deg); }
+.brand-spark { position: absolute; z-index: 1; width: 6px; height: 15px; border-radius: 5px; background: var(--ink-deep); transform: rotate(45deg); }
+.spark-one { top: 0; right: 1px; }
+.spark-two { width: 5px; height: 11px; top: 6px; right: -4px; transform: rotate(90deg); }
+.brand-text { display: flex; flex-direction: column; line-height: 1; }
+.brand-text strong { font-size: 17px; letter-spacing: .1em; }
+.brand-text strong span { color: var(--coral-ink); }
+.brand-text small { margin-top: 5px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.main-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; }
+.main-nav a, .footer-bottom a { font-size: 13px; font-weight: 650; color: #5b6561; transition: color .2s ease; }
+.main-nav a:hover, .footer-bottom a:hover { color: var(--coral); }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 52px; padding: 0 23px; border: 0; border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: .01em; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.button:hover { transform: translateY(-2px); box-shadow: 0 9px 20px rgba(24, 35, 34, .13); }
+.button-small { min-height: 43px; padding: 0 18px; font-size: 12px; }
+.button-dark { color: var(--cream); background: var(--ink-deep); }
+.button-lime { color: var(--ink-deep); background: var(--lime); }
+.menu-toggle { display: none; width: 40px; height: 40px; padding: 8px; border: 0; background: none; cursor: pointer; }
+.menu-toggle span { display: block; height: 2px; margin: 5px 0; background: var(--ink); }
+
+.hero { position: relative; min-height: 632px; overflow: hidden; }
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: .93fr 1.07fr; align-items: center; gap: 34px; min-height: 632px; }
+.eyebrow { margin: 0 0 20px; color: var(--coral-ink); font-size: 11px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+.eyebrow-light { color: var(--lime); }
+.eyebrow span { display: inline-block; margin-right: 7px; font-size: 14px; }
+.hero h1, h2, h3, p { margin-top: 0; }
+h1, h2 { margin-bottom: 22px; font-size: clamp(45px, 5.1vw, 70px); line-height: .99; letter-spacing: -.065em; font-weight: 850; }
+h1 em, h2 em { color: var(--lime); font-style: normal; }
+.hero-lede { max-width: 445px; margin-bottom: 31px; color: #bdc8c1; font-size: 17px; line-height: 1.6; }
+.hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 23px; }
+.text-link { display: inline-flex; align-items: center; gap: 9px; border-bottom: 1px solid currentColor; padding-bottom: 3px; font-size: 13px; font-weight: 800; }
+.text-link-light { color: var(--cream); }
+.text-link-dark { color: var(--ink); }
+.text-link:hover { color: var(--coral); }
+.hero-proof { display: flex; align-items: center; gap: 12px; margin-top: 46px; color: #95a49d; font-size: 11px; line-height: 1.45; }
+.hero-proof p { margin: 0; }
+.hero-proof strong { color: var(--cream); font-size: 12px; }
+.avatar-stack { display: flex; padding-left: 5px; }
+.avatar { display: grid; place-items: center; width: 31px; height: 31px; margin-left: -5px; border: 2px solid var(--ink-deep); border-radius: 50%; color: var(--ink-deep); font-weight: 900; }
+.avatar-one { background: var(--mustard); }
+.avatar-two { background: var(--coral); }
+.hero-shape { position: absolute; border: 1px solid rgba(216, 242, 77, .14); border-radius: 50%; }
+.hero-shape-one { width: 700px; height: 700px; top: -390px; left: -300px; }
+.hero-shape-two { width: 900px; height: 900px; right: -500px; bottom: -660px; }
+.hero-visual { position: relative; height: 540px; }
+.sun-disc { position: absolute; top: 34px; right: 67px; width: 252px; height: 252px; border-radius: 50%; background: var(--mustard); opacity: .95; }
+.house-illustration { position: absolute; right: 0; bottom: 21px; width: 93%; height: 375px; }
+.roof { position: absolute; z-index: 2; top: 34px; left: 4%; width: 88%; height: 150px; background: var(--coral); clip-path: polygon(1% 100%, 15% 31%, 18% 31%, 23% 4%, 28% 31%, 100% 31%, 91% 100%); }
+.house-body { position: absolute; z-index: 3; top: 145px; right: 7%; width: 81%; height: 202px; background: #f2e7d5; border-radius: 3px 3px 13px 3px; }
+.garage-door { position: absolute; left: 7%; bottom: 0; width: 63%; height: 142px; overflow: hidden; background: var(--ink); border-radius: 4px 4px 0 0; }
+.garage-door span { display: block; height: 35px; border-bottom: 2px solid #364442; background: #293332; }
+.garage-door span::before { content: ""; display: block; width: 92%; height: 100%; margin: auto; border-left: 2px solid #364442; border-right: 2px solid #364442; }
+.side-window { position: absolute; top: 33px; right: 8%; display: grid; grid-template-columns: 17px 17px; gap: 4px; padding: 5px; background: var(--coral); }
+.side-window i { width: 17px; height: 16px; background: var(--mustard); }
+.ground-line { position: absolute; z-index: 1; bottom: 20px; left: 0; width: 100%; height: 5px; border-radius: 50%; background: var(--coral); transform: rotate(-1deg); }
+.box { position: absolute; z-index: 5; display: grid; place-items: center; color: var(--ink-deep); background: var(--mustard); border: 2px solid var(--ink-deep); transform: skewY(5deg); }
+.box::after { content: ""; position: absolute; width: 100%; top: 13px; border-top: 2px solid var(--ink-deep); transform: rotate(-5deg); }
+.box b { z-index: 1; font-size: 12px; letter-spacing: .12em; }
+.box-back { left: 5%; bottom: 37px; width: 87px; height: 82px; }
+.box-front { left: 21%; bottom: 26px; width: 112px; height: 101px; background: var(--lime); }
+.dolly { position: absolute; z-index: 6; right: 5%; bottom: 30px; width: 51px; height: 118px; border-left: 5px solid var(--ink-deep); transform: rotate(15deg); }
+.dolly::before { content: ""; position: absolute; top: -3px; left: -5px; width: 50px; height: 5px; background: var(--ink-deep); }
+.dolly::after { content: ""; position: absolute; bottom: 1px; left: -15px; width: 26px; height: 8px; border-radius: 8px; background: var(--ink-deep); }
+.dolly span { position: absolute; width: 58px; height: 54px; right: -17px; top: 22px; background: var(--coral); border: 2px solid var(--ink-deep); }
+.plant { position: absolute; z-index: 6; bottom: 24px; width: 25px; height: 23px; border-radius: 2px 2px 10px 10px; background: var(--coral); }
+.plant::before, .plant::after { content: ""; position: absolute; bottom: 19px; width: 14px; height: 35px; border: 5px solid var(--lime); border-bottom: 0; border-radius: 100% 0 0 0; }
+.plant::before { left: -5px; transform: rotate(-33deg); }
+.plant::after { right: -5px; transform: rotate(33deg) scaleX(-1); }
+.plant-one { left: 1%; }.plant-two { right: 0; transform: scale(.74); }
+.visual-label { position: absolute; z-index: 7; color: var(--ink-deep); font-size: 11px; line-height: 1.15; letter-spacing: .03em; }
+.visual-label strong { font-size: 19px; letter-spacing: -.03em; }
+.visual-label-top { top: 96px; right: 3px; padding: 13px 15px; border-radius: 3px 20px 20px 20px; background: var(--lime); transform: rotate(5deg); }
+.visual-label-bottom { right: 8%; bottom: 0; color: var(--lime); font-weight: 750; }
+.visual-label-bottom span { color: var(--coral); font-size: 18px; }
+
+.trust-strip { background: var(--cream); border-bottom: 1px solid var(--line); }
+.trust-inner { display: flex; align-items: center; justify-content: space-between; min-height: 79px; gap: 20px; }
+.trust-kicker { margin: 0; color: var(--ink); font-size: 13px; font-weight: 800; }
+.trust-items { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 20px 28px; color: #4f5b56; font-size: 11px; font-weight: 700; }
+.trust-items b { display: inline-grid; place-items: center; width: 16px; height: 16px; margin-right: 5px; border-radius: 50%; color: var(--ink-deep); background: var(--lime); font-size: 10px; }
+
+.section-heading { margin-bottom: 58px; }
+.heading-split { display: grid; grid-template-columns: 1fr .7fr; align-items: end; gap: 80px; }
+.section-heading h2 { margin-bottom: 0; color: var(--ink); font-size: clamp(40px, 4.4vw, 58px); }
+.section-heading h2 em { color: var(--coral-ink); }
+.section-intro { max-width: 390px; margin-bottom: 3px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+.service-card { position: relative; min-height: 403px; padding: 25px 27px 28px; border-radius: var(--radius-md); overflow: hidden; }
+.service-card::before { content: ""; position: absolute; right: -42px; bottom: -53px; width: 155px; height: 155px; border: 1px solid rgba(31, 41, 40, .22); border-radius: 50%; }
+.service-card::after { content: ""; position: absolute; right: -1px; bottom: 14px; width: 100px; height: 1px; background: rgba(31, 41, 40, .22); transform: rotate(45deg); }
+.service-card-yellow { background: var(--mustard); }
+.service-card-green { background: var(--sage); }
+.service-card-coral { background: var(--coral); }
+.card-top { position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 12px; font-weight: 850; }
+.card-number { opacity: .62; }.card-arrow { font-size: 23px; line-height: .5; }
+.service-icon { position: relative; height: 93px; margin: 18px 0 17px; }
+.icon-house { margin-left: 4px; width: 123px; border-bottom: 5px solid var(--ink-deep); }
+.icon-house .icon-roof { position: absolute; top: 13px; left: 15px; width: 83px; height: 69px; border: 4px solid var(--ink-deep); border-bottom: 0; transform: rotate(45deg); }
+.icon-house .icon-window { position: absolute; left: 52px; bottom: 18px; width: 26px; height: 26px; border: 4px solid var(--ink-deep); background: var(--paper); }
+.icon-house .icon-window::after { content: ""; position: absolute; top: 8px; left: -4px; width: 26px; border-top: 4px solid var(--ink-deep); }
+.icon-house .icon-door { position: absolute; left: 88px; bottom: 1px; width: 23px; height: 45px; border: 4px solid var(--ink-deep); background: var(--coral); }
+.icon-yard { width: 140px; }
+.yard-sun { position: absolute; top: 0; left: 22px; width: 24px; height: 24px; border: 4px solid var(--ink-deep); border-radius: 50%; }
+.yard-hill { position: absolute; bottom: 19px; left: 0; width: 125px; height: 58px; border: 5px solid var(--ink-deep); border-bottom: 0; border-radius: 100% 100% 0 0; transform: rotate(-8deg); }
+.yard-stem { position: absolute; left: 85px; bottom: 12px; width: 5px; height: 69px; background: var(--ink-deep); transform: rotate(6deg); }
+.yard-leaf { position: absolute; bottom: 56px; width: 27px; height: 14px; border: 4px solid var(--ink-deep); border-radius: 100% 0 100% 0; background: var(--coral); }
+.leaf-left { left: 59px; transform: rotate(-24deg); }.leaf-right { left: 89px; transform: rotate(23deg) scaleX(-1); }
+.icon-garage { width: 141px; border-bottom: 5px solid var(--ink-deep); }
+.garage-roof { position: absolute; top: 8px; left: 13px; width: 117px; height: 12px; border: 4px solid var(--ink-deep); border-bottom: 0; transform: skewX(-36deg); }
+.garage-body { position: absolute; left: 20px; bottom: 19px; width: 106px; height: 58px; border: 4px solid var(--ink-deep); background: var(--paper); }
+.garage-line { position: absolute; left: 25px; width: 96px; border-top: 4px solid var(--ink-deep); }
+.line-one { bottom: 58px; }.line-two { bottom: 39px; }.line-three { bottom: 20px; }
+.service-card h3 { position: relative; z-index: 1; margin-bottom: 10px; font-size: 22px; letter-spacing: -.035em; }
+.service-card p { position: relative; z-index: 1; max-width: 285px; min-height: 69px; margin-bottom: 16px; color: var(--ink); font-size: 13px; line-height: 1.55; }
+.service-card ul { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.service-card li { padding: 5px 8px; border: 1px solid rgba(31, 41, 40, .27); border-radius: 99px; font-size: 10px; font-weight: 750; }
+.services-footnote { margin-top: 27px; color: var(--muted); font-size: 12px; text-align: center; }.services-footnote span { color: var(--coral-ink); margin-right: 4px; }
+
+.process-section { position: relative; overflow: hidden; }
+.process-section::after { content: ""; position: absolute; right: -100px; bottom: -250px; width: 500px; height: 500px; border: 1px solid rgba(216, 242, 77, .18); border-radius: 50%; }
+.process-heading { position: relative; z-index: 1; margin-bottom: 65px; text-align: center; }.process-heading h2 { color: var(--cream); }.process-heading h2 em { color: var(--lime); }
+.process-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 55px; }
+.process-step { position: relative; }.step-number { display: block; margin-bottom: 40px; color: var(--lime); font-size: 13px; font-weight: 800; }.step-line { position: absolute; top: 8px; left: 36px; width: calc(100% - 18px); height: 1px; background: #4e5c57; }.process-step:last-child .step-line { display: none; }.step-line::before { content: "✳"; position: absolute; top: -13px; left: -1px; color: var(--coral); font-size: 19px; }
+.process-step h3 { margin-bottom: 12px; color: var(--cream); font-size: 21px; letter-spacing: -.035em; }.process-step p { max-width: 275px; margin: 0; color: #9dab9f; font-size: 13px; line-height: 1.65; }
+
+.about-section { background: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1fr .83fr; align-items: center; gap: 90px; }
+.about-photo { position: relative; height: 482px; overflow: hidden; border-radius: var(--radius-lg); background: var(--sage); }
+.about-photo::after { content: ""; position: absolute; left: -70px; right: -30px; bottom: 54px; height: 160px; background: var(--lime); border-radius: 50% 50% 0 0; transform: rotate(-5deg); }
+.about-sun { position: absolute; top: 47px; left: 55px; width: 86px; height: 86px; border-radius: 50%; background: var(--mustard); }
+.about-person { position: absolute; z-index: 3; bottom: 106px; width: 92px; }.person-one { left: 23%; }.person-two { left: 45%; bottom: 117px; transform: scale(.9); }
+.person-head { display: block; width: 42px; height: 48px; margin: 0 auto -4px; border-radius: 50% 50% 44% 44%; background: var(--ink-deep); }.person-one .person-head { background: var(--coral); }.person-two .person-head { background: var(--ink-deep); }
+.person-body { display: block; width: 71px; height: 123px; margin: auto; border-radius: 30px 30px 5px 5px; background: var(--coral); }.person-two .person-body { background: var(--mustard); }
+.person-arm { position: absolute; top: 69px; right: -22px; width: 67px; height: 17px; border-radius: 20px; background: var(--ink-deep); transform: rotate(18deg); }.person-two .person-arm { left: -22px; right: auto; transform: rotate(-19deg); }
+.about-truck { position: absolute; z-index: 4; right: 8%; bottom: 87px; width: 260px; height: 99px; border: 5px solid var(--ink-deep); border-radius: 10px 15px 5px 5px; background: var(--coral); }.truck-box { position: absolute; left: -5px; top: -5px; width: 177px; height: 99px; border: 5px solid var(--ink-deep); background: var(--mustard); }.truck-cab { position: absolute; top: -5px; right: -5px; width: 85px; height: 70px; border: 5px solid var(--ink-deep); border-radius: 0 14px 0 0; background: var(--coral); }.truck-cab::after { content: ""; position: absolute; top: 12px; right: 11px; width: 40px; height: 26px; background: var(--sage); border: 4px solid var(--ink-deep); }.truck-stripe { position: absolute; top: 44px; left: 0; width: 100%; height: 13px; background: var(--lime); border-top: 3px solid var(--ink-deep); border-bottom: 3px solid var(--ink-deep); }.truck-wheel { position: absolute; bottom: -24px; width: 39px; height: 39px; border: 6px solid var(--ink-deep); border-radius: 50%; background: var(--cream); }.wheel-one { left: 26px; }.wheel-two { right: 22px; }.about-sticker { position: absolute; z-index: 6; right: 24px; top: 30px; padding: 12px 15px; border-radius: 3px 20px 20px 20px; color: var(--ink-deep); background: var(--lime); font-size: 11px; font-weight: 700; line-height: 1.1; transform: rotate(6deg); }.about-sticker span { color: var(--coral-ink); font-size: 16px; }.about-sticker strong { font-size: 17px; }
+.about-copy h2 { font-size: clamp(40px, 4vw, 55px); }.about-copy h2 em { color: var(--coral-ink); }.about-copy > p:not(.eyebrow) { max-width: 415px; color: var(--muted); font-size: 14px; line-height: 1.75; }.about-copy .text-link { margin-top: 16px; }
+
+.appointment-section { background: var(--paper); }
+.appointment-grid { display: grid; grid-template-columns: .73fr 1fr; gap: 95px; align-items: start; }.appointment-intro h2 { font-size: clamp(47px, 5vw, 66px); }.appointment-intro h2 em { color: var(--coral-ink); }.appointment-intro > p:not(.eyebrow) { max-width: 390px; color: var(--muted); font-size: 14px; line-height: 1.75; }
+.contact-cards { display: grid; gap: 11px; margin-top: 31px; }.contact-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); transition: border-color .2s ease, transform .2s ease; }.contact-card:hover { border-color: var(--coral); transform: translateX(3px); }.contact-avatar { display: grid; place-items: center; width: 37px; height: 37px; border-radius: 50%; color: var(--ink-deep); font-size: 13px; font-weight: 900; }.contact-avatar-yellow { background: var(--mustard); }.contact-avatar-green { background: var(--sage); }.contact-card > span:nth-child(2) { display: flex; flex: 1; flex-direction: column; line-height: 1.2; }.contact-card small { color: var(--muted); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; }.contact-card strong { margin: 3px 0 2px; font-size: 13px; }.contact-card b { color: var(--coral-ink); font-size: 11px; font-weight: 700; }.contact-arrow { font-size: 19px; }
+.form-card { padding: 30px 31px 27px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--cream); box-shadow: var(--shadow); }.form-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; color: var(--ink); font-size: 18px; font-weight: 850; letter-spacing: -.03em; }.form-star { color: var(--coral-ink); font-size: 18px; }.form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }.form-card label { display: block; margin-bottom: 15px; color: var(--ink); font-size: 11px; font-weight: 800; }.form-card input, .form-card select, .form-card textarea { display: block; width: 100%; margin-top: 7px; padding: 13px 14px; border: 1px solid #d1d7cf; border-radius: 8px; outline: 0; color: var(--ink); background: var(--paper); font-size: 12px; font-weight: 500; transition: border-color .2s ease, box-shadow .2s ease; }.form-card textarea { resize: vertical; min-height: 95px; }.form-card input::placeholder, .form-card textarea::placeholder { color: #9aa39e; }.form-card input:focus, .form-card select:focus, .form-card textarea:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(255, 115, 92, .14); }.button-submit { width: 100%; margin-top: 5px; }.form-note { margin: 13px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; text-align: center; }.form-note span { color: var(--coral); }.form-success { min-height: 0; margin: 0; color: #4d7338; font-size: 11px; font-weight: 700; text-align: center; }
+
+.site-footer { padding: 44px 0 20px; }.footer-top { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding-bottom: 38px; border-bottom: 1px solid #394744; }.brand-footer .brand-text strong { color: var(--cream); }.brand-footer .brand-text strong span { color: var(--coral); }.brand-footer .brand-text small { color: #87958e; }.brand-footer .brand-square::after { border-color: var(--ink-deep); }.footer-top p { margin: 0; color: #aeb9b1; font-size: 12px; line-height: 1.45; text-align: center; }.footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 19px; color: #819089; font-size: 10px; }.footer-bottom a { color: var(--cream); font-size: 10px; }
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: .9fr 1.1fr; gap: 0; }.hero-visual { transform: translateX(35px) scale(.88); transform-origin: right center; }.hero h1 { font-size: clamp(43px, 6vw, 62px); }
+  .heading-split { gap: 35px; }.about-grid { gap: 55px; }.appointment-grid { gap: 45px; }
+}
+@media (max-width: 760px) {
+  .container { width: min(100% - 34px, 590px); }.section { padding: 77px 0; }
+  .announcement-inner { flex-wrap: wrap; padding: 9px 0; line-height: 1.25; }.announcement-inner a { margin-left: 5px; }
+  .nav-wrap { min-height: 73px; }.main-nav, .nav-cta { display: none; }.menu-toggle { display: block; }.site-header.menu-open .main-nav { position: absolute; top: 73px; left: 0; right: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 17px 15px; border-bottom: 1px solid var(--line); background: var(--paper); box-shadow: 0 12px 20px rgba(24, 35, 34, .08); }.site-header.menu-open .main-nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }.site-header.menu-open .main-nav a:last-child { border-bottom: 0; }
+  .hero { min-height: auto; }.hero-grid { display: block; min-height: auto; padding-top: 72px; }.hero-copy { position: relative; z-index: 2; }.hero-lede { font-size: 15px; }.hero-proof { margin-top: 31px; }.hero-visual { height: 375px; margin-top: 15px; transform: none; }.sun-disc { top: 12px; right: 17%; width: 185px; height: 185px; }.house-illustration { bottom: 0; width: 100%; height: 320px; }.visual-label-top { top: 45px; right: 0; }.visual-label-bottom { bottom: 0; right: 10%; }
+  .trust-inner { display: block; padding: 20px 0 17px; }.trust-kicker { margin-bottom: 13px; }.trust-items { justify-content: flex-start; gap: 9px 16px; }
+  .heading-split { display: block; }.section-heading { margin-bottom: 39px; }.section-intro { margin-top: 23px; font-size: 14px; }.service-grid { grid-template-columns: 1fr; }.service-card { min-height: 360px; }.service-card p { min-height: auto; max-width: 380px; }.service-icon { margin-top: 14px; }
+  .process-grid { grid-template-columns: 1fr; gap: 40px; }.process-heading { text-align: left; }.process-heading h2 { font-size: 46px; }.process-step { padding-left: 52px; }.step-number { position: absolute; top: 0; left: 0; margin: 0; }.step-line { display: none; }.process-step h3 { font-size: 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 50px; }.about-photo { height: 380px; }.about-person { transform: scale(.78); transform-origin: bottom left; }.person-two { transform: scale(.7); }.about-truck { transform: scale(.78); transform-origin: right bottom; }.about-copy h2 { font-size: 46px; }
+  .appointment-grid { grid-template-columns: 1fr; gap: 48px; }.appointment-intro h2 { font-size: 54px; }.form-card { padding: 24px 18px 22px; }.form-row { grid-template-columns: 1fr; gap: 0; }
+  .footer-top { align-items: flex-start; flex-wrap: wrap; }.footer-top p { order: 3; width: 100%; margin-top: 7px; text-align: left; }.footer-bottom { flex-wrap: wrap; }.footer-bottom span:nth-child(2) { width: 100%; order: 3; }
+}
+@media (max-width: 430px) {
+  h1 { font-size: 47px; }.hero-actions { align-items: flex-start; flex-direction: column; gap: 19px; }.button { min-height: 50px; }.hero-visual { height: 325px; }.house-illustration { transform: scale(.88); transform-origin: right bottom; }.about-photo { height: 330px; }.about-sun { top: 30px; left: 30px; }.about-person { bottom: 83px; }.about-truck { bottom: 64px; right: 3%; }.about-photo::after { bottom: 38px; }.contact-card { padding-left: 10px; padding-right: 10px; }.contact-card b { font-size: 10px; }
+}
+    </style>
+    <script>
+window.BUSINESS = {
+  area: "Somerset, KY and surrounding areas.",
+  me: {
+    name: "Joey Culverhouse",
+    email: "culverhousejoey2011@gmail.com",
+  },
+  friend: {
+    name: "Nick Hancock",
+    email: "nicklmc10641@gmail.com",
+  },
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const BUSINESS = window.BUSINESS;
+  const siteHeader = document.querySelector(".site-header");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const appointmentForm = document.querySelector("#appointment-form");
+  const successMessage = document.querySelector("#form-success");
+
+  menuToggle?.addEventListener("click", () => {
+    const isOpen = siteHeader.classList.toggle("menu-open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  });
+
+  document.querySelectorAll(".main-nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      siteHeader.classList.remove("menu-open");
+      menuToggle?.setAttribute("aria-expanded", "false");
+      menuToggle?.setAttribute("aria-label", "Open menu");
+    });
+  });
+
+  const updateText = (selector, value) => {
+    document.querySelectorAll(selector).forEach((element) => {
+      element.textContent = value;
+    });
+  };
+
+  const updateContact = (person, selectors, contactId) => {
+    updateText(selectors.name, person.name);
+    updateText(selectors.email, person.email);
+    const contactCard = document.querySelector(contactId);
+    if (contactCard) contactCard.href = `mailto:${person.email}`;
+  };
+
+  updateContact(
+    BUSINESS.me,
+    { name: ".contact-name-me", email: ".contact-email-me" },
+    "#contact-me",
+  );
+
+  updateContact(
+    BUSINESS.friend,
+    { name: ".contact-name-friend", email: ".contact-email-friend" },
+    "#contact-friend",
+  );
+
+  updateText("#service-area", BUSINESS.area);
+  updateText("#year", new Date().getFullYear());
+
+  const recipientSelect = appointmentForm?.elements.recipient;
+  if (recipientSelect) {
+    recipientSelect.options[0].textContent = `Me — ${BUSINESS.me.name}`;
+    recipientSelect.options[1].textContent = `My friend — ${BUSINESS.friend.name}`;
+  }
+
+  appointmentForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(appointmentForm);
+    const recipient = formData.get("recipient") === "friend"
+      ? BUSINESS.friend
+      : BUSINESS.me;
+
+    const subject = `De-junking appointment request from ${formData.get("name")}`;
+
+    const body = [
+      `Hi ${recipient.name.split(" ")[0]},`,
+      "",
+      "I’d like to request a de-junking appointment.",
+      "",
+      `Name: ${formData.get("name")}`,
+      `Email: ${formData.get("email")}`,
+      `Phone: ${formData.get("phone") || "Not provided"}`,
+      `Service: ${formData.get("service")}`,
+      `Preferred timing: ${formData.get("timing") || "Flexible"}`,
+      "",
+      "Details:",
+      formData.get("message") || "No additional details provided.",
+    ].join("\n");
+
+    window.location.href =
+      `mailto:${recipient.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    successMessage.textContent =
+      `Your email draft is ready for ${recipient.name}.`;
+  });
+});
+    </script>
+  </head>
+  <body>
+    <div class="announcement-bar">
+      <div class="container announcement-inner">
+        <span class="announcement-dot" aria-hidden="true"></span>
+        <span>Friendly local de-junking for homes, yards &amp; garages</span>
+        <a href="#appointment">Request a pickup <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="#top" aria-label="De-Junk Duo home">
+          <span class="brand-mark" aria-hidden="true">
+            <span class="brand-spark spark-one"></span>
+            <span class="brand-spark spark-two"></span>
+            <span class="brand-square"></span>
+          </span>
+          <span class="brand-text">
+            <strong>DE-JUNK<span>DUO</span></strong>
+            <small>Two friends. Less clutter.</small>
+          </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#services">What we clear</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#about">About us</a>
+        </nav>
+
+        <a class="button button-small button-dark nav-cta" href="#appointment">
+          Book a pickup <span aria-hidden="true">↗</span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero section-dark">
+        <div class="hero-shape hero-shape-one" aria-hidden="true"></div>
+        <div class="hero-shape hero-shape-two" aria-hidden="true"></div>
+
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow eyebrow-light">
+              <span aria-hidden="true">✳</span> Your local clean-out crew
+            </p>
+
+            <h1>Clear the clutter.<br /><em>Get your space back.</em></h1>
+
+            <p class="hero-lede">
+              Two friends with a truck, a good attitude, and a plan for the stuff you’ve been meaning to get rid of.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button-lime" href="#appointment">
+                Tell us what needs to go <span aria-hidden="true">↗</span>
+              </a>
+
+              <a class="text-link text-link-light" href="#services">
+                See what we clear <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+
+            <div class="hero-proof">
+              <div class="avatar-stack" aria-hidden="true">
+                <span class="avatar avatar-one">J</span>
+                <span class="avatar avatar-two">N</span>
+              </div>
+
+              <p>
+                <strong>Two local guys</strong><br />
+                ready to make room for what matters.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="hero-visual"
+            role="img"
+            aria-label="Illustration of a tidy garage with boxes ready for pickup"
+          >
+            <div class="sun-disc" aria-hidden="true"></div>
+            <div class="visual-label visual-label-top">
+              Less stuff<br /><strong>more room</strong>
+            </div>
+
+            <div class="house-illustration">
+              <div class="roof"></div>
+
+              <div class="house-body">
+                <div class="garage-door">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+
+                <div class="side-window">
+                  <i></i><i></i><i></i><i></i>
+                </div>
+              </div>
+
+              <div class="plant plant-one"><span></span></div>
+              <div class="plant plant-two"><span></span></div>
+              <div class="box box-back"><b>GO</b></div>
+              <div class="box box-front"><b>BYE</b></div>
+              <div class="dolly"><span></span></div>
+              <div class="ground-line"></div>
+            </div>
+
+            <div class="visual-label visual-label-bottom">
+              <span aria-hidden="true">✦</span> We haul it away
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip">
+        <div class="container trust-inner">
+          <p class="trust-kicker">The easy way to make room</p>
+
+          <div class="trust-items">
+            <span><b aria-hidden="true">✓</b> Upfront quotes</span>
+            <span><b aria-hidden="true">✓</b> Friendly service</span>
+            <span><b aria-hidden="true">✓</b> We do the heavy lifting</span>
+            <span><b aria-hidden="true">✓</b> No judgment, ever</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section services-section" id="services">
+        <div class="container">
+          <div class="section-heading heading-split">
+            <div>
+              <p class="eyebrow">
+                <span aria-hidden="true">✳</span> What we clear
+              </p>
+
+              <h2>
+                Goodbye, clutter.<br />
+                <em>Hello, breathing room.</em>
+              </h2>
+            </div>
+
+            <p class="section-intro">
+              Whether it’s one bulky item or a whole weekend’s worth of sorting, we’ll help you get it out of your way and onto its next stop.
+            </p>
+          </div>
+
+          <div class="service-grid">
+            <article class="service-card service-card-yellow">
+              <div class="card-top">
+                <span class="card-number">01</span>
+                <span class="card-arrow" aria-hidden="true">↗</span>
+              </div>
+
+              <div class="service-icon icon-house" aria-hidden="true">
+                <span class="icon-roof"></span>
+                <span class="icon-window"></span>
+                <span class="icon-door"></span>
+              </div>
+
+              <h3>House clean-outs</h3>
+
+              <p>
+                Moving, downsizing, or just ready for a reset? We’ll clear the rooms and take the pile with us.
+              </p>
+
+              <ul>
+                <li>Furniture &amp; appliances</li>
+                <li>Boxes &amp; household clutter</li>
+              </ul>
+            </article>
+
+            <article class="service-card service-card-green">
+              <div class="card-top">
+                <span class="card-number">02</span>
+                <span class="card-arrow" aria-hidden="true">↗</span>
+              </div>
+
+              <div class="service-icon icon-yard" aria-hidden="true">
+                <span class="yard-sun"></span>
+                <span class="yard-hill"></span>
+                <span class="yard-stem"></span>
+                <span class="yard-leaf leaf-left"></span>
+                <span class="yard-leaf leaf-right"></span>
+              </div>
+
+              <h3>Yard clean-ups</h3>
+
+              <p>
+                Let’s get that outdoor space back. We’ll gather the leftovers, branches, and everything between.
+              </p>
+
+              <ul>
+                <li>Branches &amp; green waste</li>
+                <li>Old outdoor items</li>
+              </ul>
+            </article>
+
+            <article class="service-card service-card-coral">
+              <div class="card-top">
+                <span class="card-number">03</span>
+                <span class="card-arrow" aria-hidden="true">↗</span>
+              </div>
+
+              <div class="service-icon icon-garage" aria-hidden="true">
+                <span class="garage-roof"></span>
+                <span class="garage-body"></span>
+                <span class="garage-line line-one"></span>
+                <span class="garage-line line-two"></span>
+                <span class="garage-line line-three"></span>
+              </div>
+
+              <h3>Garage rescue</h3>
+
+              <p>
+                Reclaim the parking spot, workshop, or home gym that got swallowed up by “I’ll deal with it later.”
+              </p>
+
+              <ul>
+                <li>Scrap &amp; broken gear</li>
+                <li>Bulky junk &amp; storage piles</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="services-footnote">
+            <span aria-hidden="true">✳</span>
+            Not sure if we take it? Ask us. If we can’t, we’ll point you to someone who can.
+          </div>
+        </div>
+      </section>
+
+      <section class="section process-section section-dark" id="how-it-works">
+        <div class="container">
+          <div class="section-heading process-heading">
+            <p class="eyebrow eyebrow-light">
+              <span aria-hidden="true">✳</span> How it works
+            </p>
+
+            <h2>
+              Three easy steps<br />
+              <em>to a lighter space.</em>
+            </h2>
+          </div>
+
+          <div class="process-grid">
+            <div class="process-step">
+              <span class="step-number">01</span>
+              <span class="step-line" aria-hidden="true"></span>
+              <h3>Show us the stuff</h3>
+              <p>
+                Send a few details about what you want gone. Photos are welcome, but never required.
+              </p>
+            </div>
+
+            <div class="process-step">
+              <span class="step-number">02</span>
+              <span class="step-line" aria-hidden="true"></span>
+              <h3>Pick a time</h3>
+              <p>
+                We’ll get back to you with a straightforward quote and a pickup window that works.
+              </p>
+            </div>
+
+            <div class="process-step">
+              <span class="step-number">03</span>
+              <span class="step-line" aria-hidden="true"></span>
+              <h3>Take back your space</h3>
+              <p>
+                We’ll lift, load, and leave things swept up. You get the room back without the headache.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about-section" id="about">
+        <div class="container about-grid">
+          <div class="about-photo">
+            <div class="about-sun" aria-hidden="true"></div>
+
+            <div class="about-person person-one" aria-hidden="true">
+              <span class="person-head"></span>
+              <span class="person-body"></span>
+              <span class="person-arm"></span>
+            </div>
+
+            <div class="about-person person-two" aria-hidden="true">
+              <span class="person-head"></span>
+              <span class="person-body"></span>
+              <span class="person-arm"></span>
+            </div>
+
+            <div class="about-truck" aria-hidden="true">
+              <span class="truck-cab"></span>
+              <span class="truck-box"></span>
+              <span class="truck-wheel wheel-one"></span>
+              <span class="truck-wheel wheel-two"></span>
+              <span class="truck-stripe"></span>
+            </div>
+
+            <div class="about-sticker">
+              <span aria-hidden="true">✳</span>
+              good people<br />
+              <strong>good work</strong>
+            </div>
+          </div>
+
+          <div class="about-copy">
+            <p class="eyebrow">
+              <span aria-hidden="true">✳</span> Nice to meet you
+            </p>
+
+            <h2>
+              Two friends who<br />
+              <em>like a clean slate.</em>
+            </h2>
+
+            <p>
+              We started De-Junk Duo because we know the feeling: the garage door that barely opens, the “temporary” pile that became permanent, the Saturday you’d rather get back.
+            </p>
+
+            <p>
+              We’re local, we show up when we say we will, and we treat your home like it’s our own. No pressure, no weird surprises—just two extra sets of hands and a whole lot less stuff.
+            </p>
+
+            <a class="text-link text-link-dark" href="#appointment">
+              Get to know us over email <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section appointment-section" id="appointment">
+        <div class="container appointment-grid">
+          <div class="appointment-intro">
+            <p class="eyebrow">
+              <span aria-hidden="true">✳</span> Ready when you are
+            </p>
+
+            <h2>
+              Let’s make<br />
+              <em>some room.</em>
+            </h2>
+
+            <p>
+              Tell us a little about the job and who you’d like to email. We’ll follow up with a few questions, a quote, and the next available times.
+            </p>
+
+            <div class="contact-cards">
+              <a class="contact-card" id="contact-me" href="mailto:culverhousejoey2011@gmail.com">
+                <span class="contact-avatar contact-avatar-yellow">J</span>
+                <span>
+                  <small>Email Joey</small>
+                  <strong class="contact-name-me">Joey Culverhouse</strong>
+                  <b class="contact-email-me">culverhousejoey2011@gmail.com</b>
+                </span>
+                <span class="contact-arrow" aria-hidden="true">↗</span>
+              </a>
+
+              <a class="contact-card" id="contact-friend" href="mailto:nicklmc10641@gmail.com">
+                <span class="contact-avatar contact-avatar-green">N</span>
+                <span>
+                  <small>Email Nick</small>
+                  <strong class="contact-name-friend">Nick Hancock</strong>
+                  <b class="contact-email-friend">nicklmc10641@gmail.com</b>
+                </span>
+                <span class="contact-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <div class="form-card-head">
+              <span>Appointment request</span>
+              <span class="form-star" aria-hidden="true">✳</span>
+            </div>
+
+            <form id="appointment-form">
+              <div class="form-row">
+                <label>
+                  My name
+                  <input type="text" name="name" placeholder="Your name" required />
+                </label>
+
+                <label>
+                  Email address
+                  <input type="email" name="email" placeholder="you@email.com" required />
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>
+                  Phone number
+                  <input type="tel" name="phone" placeholder="(555) 555-5555" />
+                </label>
+
+                <label>
+                  What needs clearing?
+                  <select name="service" required>
+                    <option value="" selected disabled>Choose one</option>
+                    <option>House clean-out</option>
+                    <option>Yard clean-up</option>
+                    <option>Garage rescue</option>
+                    <option>A little bit of everything</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>
+                  Preferred timing
+                  <input type="text" name="timing" placeholder="e.g. Weekday mornings" />
+                </label>
+
+                <label>
+                  Email my request to
+                  <select name="recipient" required>
+                    <option value="me">Joey Culverhouse</option>
+                    <option value="friend">Nick Hancock</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                Tell us a little more
+                <textarea
+                  name="message"
+                  rows="4"
+                  placeholder="What should we know? Approximate amount, stairs, photos, etc."
+                ></textarea>
+              </label>
+
+              <button class="button button-dark button-submit" type="submit">
+                Open my email app <span aria-hidden="true">↗</span>
+              </button>
+
+              <p class="form-note">
+                <span aria-hidden="true">↳</span>
+                This opens your email app with everything filled in—no account or login needed.
+              </p>
+
+              <p class="form-success" id="form-success" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-dark">
+      <div class="container footer-top">
+        <a class="brand brand-footer" href="#top" aria-label="De-Junk Duo home">
+          <span class="brand-mark" aria-hidden="true">
+            <span class="brand-spark spark-one"></span>
+            <span class="brand-spark spark-two"></span>
+            <span class="brand-square"></span>
+          </span>
+
+          <span class="brand-text">
+            <strong>DE-JUNK<span>DUO</span></strong>
+            <small>Two friends. Less clutter.</small>
+          </span>
+        </a>
+
+        <p>
+          Making a little more room<br />
+          for the good stuff.
+        </p>
+
+        <a class="button button-lime" href="#appointment">
+          Book a pickup <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="container footer-bottom">
+        <span>© <span id="year"></span> De-Junk Duo. Made local.</span>
+        <span id="service-area">Somerset, KY and surrounding areas.</span>
+        <a href="#appointment">Contact us <span aria-hidden="true">↗</span></a>
+      </div>
+    </footer>
+  </body>
+</html>
